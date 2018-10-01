@@ -49,13 +49,13 @@ func main() {
 			continue
 		}
 		if branch == "master" {
-			message.Info("ignoring master branch")
+			message.Debug("ignoring master branch")
 			continue
 		}
 		if _, err := git.Do("branch", "-D", branch); err != nil {
 			message.Error(err)
 		} else {
-			message.Info("%s deleted", branch)
+			message.Debugf("%s deleted", branch)
 		}
 	}
 }
