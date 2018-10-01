@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	branchExtractor = regexp.MustCompile(`^\s*\*\s(.*)$`)
+	branchExtractor = regexp.MustCompile(`^\s*\*?\s(.*)$`)
 )
 
 func main() {
