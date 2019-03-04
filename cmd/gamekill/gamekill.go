@@ -24,6 +24,8 @@ func main() {
 		message.Fatalf("failed to get processes list: %s", err)
 	}
 
+	var gamesCount int
+	var gamesKilled int
 	for _, p := range ps {
 		cmd, err := p.Cmdline()
 		if err != nil {
@@ -33,13 +35,23 @@ func main() {
 
 		for app, checker := range checkers {
 			if ok, _ := checker.Extract(cmd); ok {
+				gamesCount++
 				_, _ = fmt.Fprintf(os.Stderr, "killing %s (pid=%d, cmdline=\"%s\"): ", app, p.Pid, cmd)
 				if err := p.Kill(); err != nil {
 					_, _ = fmt.Fprintf(os.Stderr, "\033[31mfailed to kill: %s\n", err)
 				} else {
+					gamesKilled++
 					_, _ = os.Stderr.WriteString("done\n")
 				}
 			}
 		}
+	}
+
+	if gamesCount == 0 {
+		message.Info("no games detected")
+	} else if gamesKilled == gamesCount {
+		message.Infof("%d games detected, all killed", gamesCount)
+	} else {
+		message.Infof("%d games detected, killed %d of them", gamesCount, gamesKilled)
 	}
 }
