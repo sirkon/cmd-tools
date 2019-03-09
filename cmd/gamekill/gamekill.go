@@ -47,11 +47,20 @@ func main() {
 		}
 	}
 
-	if gamesCount == 0 {
-		message.Info("no games detected")
-	} else if gamesKilled == gamesCount {
-		message.Infof("%d games detected, all killed", gamesCount)
-	} else {
-		message.Infof("%d games detected, killed %d of them", gamesCount, gamesKilled)
+	switch gamesCount {
+	case 0:
+		message.Info("summary: no games detected")
+	case 1:
+		if gamesKilled == gamesCount {
+			message.Info("summary: only 1 game detected, killed")
+		} else {
+			message.Info("summary: only 1 game detected, failed to kill it")
+		}
+	default:
+		if gamesKilled == gamesCount {
+			message.Infof("summary: %d games detected, all killed", gamesCount)
+		} else {
+			message.Infof("summary: %d games detected, killed %d of them", gamesCount, gamesKilled)
+		}
 	}
 }
