@@ -13,7 +13,8 @@ import (
 )
 
 var args struct {
-	Branch string `arg:"positional,required"`
+	Branch  string `arg:"positional,required"`
+	Verbose bool   `arg:"--verbose" help:"diagnose output"`
 }
 
 func main() {
@@ -31,10 +32,11 @@ func main() {
 	gosrc := filepath.Join(gopath, "src")
 
 	action := action{
-		branch: args.Branch,
-		gopath: gopath,
-		gosrc:  gosrc,
-		prefix: gosrc + string(filepath.Separator),
+		branch:  args.Branch,
+		gopath:  gopath,
+		gosrc:   gosrc,
+		prefix:  gosrc + string(filepath.Separator),
+		verbose: args.Verbose,
 	}
 	if err := filepath.Walk(gosrc, action.action); err != nil {
 		message.Fatal(err)
@@ -42,10 +44,11 @@ func main() {
 }
 
 type action struct {
-	branch string
-	gopath string
-	gosrc  string
-	prefix string
+	branch  string
+	gopath  string
+	gosrc   string
+	prefix  string
+	verbose bool
 }
 
 func (a *action) action(path string, info os.FileInfo, err error) error {
@@ -76,7 +79,9 @@ func (a *action) action(path string, info os.FileInfo, err error) error {
 
 	res, err := git.Do("branch")
 	if err != nil {
-		message.Warningf("warning: project `%s` is not under git control", project)
+		if a.verbose {
+			message.Warningf("warning: project `%s` is not under git control", project)
+		}
 		return filepath.SkipDir
 	}
 
