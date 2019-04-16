@@ -93,6 +93,7 @@ func (a *action) action(path string, info os.FileInfo, err error) error {
 		}
 		if a.branch == be.Name {
 			message.Info(project)
+			return nil
 		}
 	}
 	return nil

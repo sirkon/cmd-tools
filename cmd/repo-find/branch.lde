@@ -1,1 +1,1 @@
-Branch = ?Head(^"* ") Name(str);
+Branch = ?Head(^'*') *' ' Name(str);

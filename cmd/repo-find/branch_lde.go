@@ -9,11 +9,7 @@
 
 package main
 
-import (
-	"bytes"
-)
-
-var starSpace = []byte("* ")
+import ()
 
 // Branch ...
 type Branch struct {
@@ -27,12 +23,14 @@ type Branch struct {
 // Extract ...
 func (p *Branch) Extract(line []byte) (bool, error) {
 	p.Rest = line
+	var headPassCounter int
+	var headPassValue byte
 	var rest1 []byte
 	rest1 = p.Rest
 
-	// Checks if the rest starts with `"* "` and pass it
-	if bytes.HasPrefix(rest1, starSpace) {
-		rest1 = rest1[len(starSpace):]
+	// Checks if the rest starts with '*' and pass it
+	if len(rest1) >= 1 && rest1[0] == '*' {
+		rest1 = rest1[1:]
 	} else {
 		p.Head.Valid = false
 		goto branchHeadLabel
@@ -40,6 +38,16 @@ func (p *Branch) Extract(line []byte) (bool, error) {
 	p.Head.Valid = true
 	p.Rest = rest1
 branchHeadLabel:
+
+	// Pass all characters ' ' at the rest start
+	for headPassCounter, headPassValue = range p.Rest {
+		if headPassValue != ' ' {
+			break
+		}
+	}
+	if headPassCounter > 0 {
+		p.Rest = p.Rest[headPassCounter:]
+	}
 
 	// Take the rest as Name(str)
 	p.Name = string(p.Rest)
