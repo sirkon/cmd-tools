@@ -15,7 +15,9 @@ type extractor interface {
 var checkers = map[string]extractor{
 	"War Thunder":          &WarThunderAces{},
 	"War Thunder launcher": &WarThunderLauncher{},
+	"Gajin Tray Agent":     &GajinAgent{},
 	"The Witcher 3":        &Witcher3{},
+	"The Witcher":          &TheWitcher{},
 }
 
 func main() {
@@ -36,12 +38,12 @@ func main() {
 		for app, checker := range checkers {
 			if ok, _ := checker.Extract(cmd); ok {
 				gamesCount++
-				_, _ = fmt.Fprintf(os.Stderr, "killing %s (pid=%d, cmdline=\"%s\"): ", app, p.Pid, cmd)
+				_, _ = fmt.Fprintf(os.Stderr, "killing \033[31;1m%s\033[0m (pid=%d, cmdline=\"\033[1m%s\033[0m\"): ", app, p.Pid, cmd)
 				if err := p.Kill(); err != nil {
 					_, _ = fmt.Fprintf(os.Stderr, "\033[31mfailed to kill: %s\n", err)
 				} else {
 					gamesKilled++
-					_, _ = os.Stderr.WriteString("done\n")
+					_, _ = os.Stderr.WriteString("\033[32;1mdone\033[0m\n")
 				}
 			}
 		}

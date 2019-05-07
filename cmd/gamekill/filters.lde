@@ -1,3 +1,5 @@
 WarThunderAces = _"aces" $;
 WarThunderLauncher = _"War Thunder" _ "launcher";
+GajinAgent = _ "\\gjagent.exe" $;
 Witcher3 = _"witcher3.exe" $;
+TheWitcher = _"witcher.exe" $;
