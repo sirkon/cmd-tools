@@ -1,0 +1,1 @@
+CommitMsg = Prefix(string) '-' Task(uint) " | " Text(string);

@@ -11,4 +11,5 @@ require (
 	github.com/sirkon/message v1.5.1
 	github.com/stretchr/testify v1.2.2
 	golang.org/x/sys v0.0.0-20190304154630-e844e0132e93 // indirect
+	gopkg.in/src-d/go-git.v4 v4.11.0
 )
