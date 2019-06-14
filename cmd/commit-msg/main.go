@@ -61,14 +61,6 @@ func main() {
 		message.Fatalf("commit message must look like `%s | <TEXT>`, got `%s` instead", branch, commitMsg)
 	}
 
-	var cmChecker CommitMsg
-	if ok, err := cmChecker.Extract(commitMsg); !ok {
-		if err != nil {
-			message.Fatal("invalid branch name to commmit: %s", err)
-		}
-		message.Fatalf(`cannot commit such a branch name, it must be <PREFIX>-<NUM>, got %s instead`, branch)
-	}
-
 	var requiredPrefix string
 	switch {
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/ucs/bazaar"):
@@ -80,6 +72,15 @@ func main() {
 	default:
 		message.Fatalf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
 	}
+
+	var cmChecker CommitMsg
+	if ok, err := cmChecker.Extract(commitMsg); !ok {
+		if err != nil {
+			message.Fatal("invalid branch name to commmit: %s", err)
+		}
+		message.Fatalf(`cannot commit such a branch name, it must be %s-<NUM>, got %s instead`, requiredPrefix, branch)
+	}
+
 	if cmChecker.Prefix != requiredPrefix {
 		message.Fatal("commit message must be %s-<NUM> | <TEXT>, got `%s` instead", requiredPrefix, commitMsg)
 	}
