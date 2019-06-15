@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -56,21 +57,31 @@ func main() {
 	if !ok {
 		message.Fatal("failed to retrieve branch name from %s", ref.String())
 	}
+	if branch == "master" {
+		message.Fatal("commiting to master is not allowed")
+	}
+	var bnv BranchNameValidator
+	if ok, _ := bnv.Extract(branch); !ok {
+		message.Fatalf("you can only commit in branches like <PREFIX>-<NUM> (<PREFIX> = UCS, CAT, CC, etc) , got %s instead", branch)
+	}
 
 	if !strings.HasPrefix(commitMsg, branch) {
 		message.Fatalf("commit message must look like `%s | <TEXT>`, got `%s` instead", branch, commitMsg)
 	}
 
-	var requiredPrefix string
+	var acceptablePrefixes []string
 	switch {
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/ucs/bazaar"):
-		requiredPrefix = "CAT"
+		acceptablePrefixes = append(acceptablePrefixes, "CAT")
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CALENDAR/"):
-		requiredPrefix = "CC"
+		acceptablePrefixes = append(acceptablePrefixes, "CC")
+	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CATALOG/"):
+		acceptablePrefixes = append(acceptablePrefixes, "CAT")
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-"):
-		requiredPrefix = "UCS"
+		acceptablePrefixes = append(acceptablePrefixes, "UCS")
 	default:
-		message.Fatalf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
+		message.Warningf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
+		return
 	}
 
 	var cmChecker CommitMsg
@@ -78,12 +89,40 @@ func main() {
 		if err != nil {
 			message.Fatal("invalid branch name to commmit: %s", err)
 		}
-		message.Fatalf(`cannot commit such a branch name, it must be %s-<NUM>, got %s instead`, requiredPrefix, branch)
+		message.Fatalf(`cannot commit such a branch name, it must be %s-<NUM>, got %s instead`, acceptablePrefixes, branch)
 	}
 
-	if cmChecker.Prefix != requiredPrefix {
-		message.Fatal("commit message must be %s-<NUM> | <TEXT>, got `%s` instead", requiredPrefix, commitMsg)
+	if !isInStringArray(cmChecker.Prefix, acceptablePrefixes) {
+		switch len(acceptablePrefixes) {
+		case 0:
+			message.Fatal("internal error – no prefix found for remote path %s", remoteURL)
+		case 1:
+			message.Fatal("commit message must be %s-<NUM> | <TEXT>, got `%s` instead", acceptablePrefixes[0], commitMsg)
+		case 2:
+			message.Fatal("commit message must be either %s-<NUM> or %s-<NUM> | <TEXT>, got `%s` instead",
+				acceptablePrefixes[0],
+				acceptablePrefixes[1],
+				commitMsg,
+			)
+		default:
+			var values []string
+			for _, prefix := range acceptablePrefixes {
+				values = append(values, fmt.Sprintf("%s-<NUM> | <TEXT>", prefix))
+			}
+			finalValue := fmt.Sprintf("%s or %s", strings.Join(values[:len(values)-1], ", "), values[len(values)-1])
+			message.Fatal("commit message must be one of %s, got `%s` instead", finalValue, commitMsg)
+		}
+
 	}
+}
+
+func isInStringArray(value string, array []string) bool {
+	for _, item := range array {
+		if item == value {
+			return true
+		}
+	}
+	return false
 }
 
 func getRepoOrigin(rep *git.Repository) *config.RemoteConfig {

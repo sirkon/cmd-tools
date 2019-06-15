@@ -60,3 +60,35 @@ func (p *CommitMsg) Extract(line string) (bool, error) {
 	p.Rest = p.Rest[len(p.Rest):]
 	return true, nil
 }
+
+// BranchNameValidator ...
+type BranchNameValidator struct {
+	Rest   string
+	Prefix string
+	Task   uint
+}
+
+// Extract ...
+func (p *BranchNameValidator) Extract(line string) (bool, error) {
+	p.Rest = line
+	var err error
+	var pos int
+	var tmpUint uint64
+
+	// Take until '-' as Prefix(string)
+	pos = strings.IndexByte(p.Rest, '-')
+	if pos >= 0 {
+		p.Prefix = p.Rest[:pos]
+		p.Rest = p.Rest[pos+1:]
+	} else {
+		return false, nil
+	}
+
+	// Take the rest as Task(uint)
+	if tmpUint, err = strconv.ParseUint(p.Rest, 10, 64); err != nil {
+		return false, fmt.Errorf("cannot parse `%s` into field Task(uint): %s", p.Rest, err)
+	}
+	p.Task = uint(tmpUint)
+	p.Rest = p.Rest[len(p.Rest):]
+	return true, nil
+}
