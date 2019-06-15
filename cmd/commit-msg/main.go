@@ -58,7 +58,7 @@ func main() {
 		message.Fatal("failed to retrieve branch name from %s", ref.String())
 	}
 	if branch == "master" {
-		message.Fatal("commiting to master is not allowed")
+		message.Fatal("commiting to master is not allowed at gitlab.stageoffice.ru")
 	}
 	var bnv BranchNameValidator
 	if ok, _ := bnv.Extract(branch); !ok {
