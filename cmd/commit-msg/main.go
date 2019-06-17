@@ -54,6 +54,7 @@ func main() {
 		message.Fatalf("failed to get a HEAD: %s", err)
 	}
 	branch, ok := getBranchName(ref.String())
+	message.Info(branch)
 	if !ok {
 		message.Fatal("failed to retrieve branch name from %s", ref.String())
 	}
@@ -70,15 +71,22 @@ func main() {
 	}
 
 	var acceptablePrefixes []string
+	const (
+		catalog      = "CAT"
+		calendar     = "CC"
+		wholeproject = "UCS"
+	)
 	switch {
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/ucs/bazaar"):
-		acceptablePrefixes = append(acceptablePrefixes, "CAT")
+		acceptablePrefixes = append(acceptablePrefixes, catalog)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CALENDAR/"):
-		acceptablePrefixes = append(acceptablePrefixes, "CC")
+		acceptablePrefixes = append(acceptablePrefixes, calendar)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CATALOG/"):
-		acceptablePrefixes = append(acceptablePrefixes, "CAT")
+		acceptablePrefixes = append(acceptablePrefixes, catalog)
+	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-COMMON/schema"):
+		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-"):
-		acceptablePrefixes = append(acceptablePrefixes, "UCS")
+		acceptablePrefixes = append(acceptablePrefixes, wholeproject)
 	default:
 		message.Warningf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
 		return
