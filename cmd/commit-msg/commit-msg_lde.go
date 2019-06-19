@@ -21,39 +21,22 @@ var spaceBarSpace = " | "
 type CommitMsg struct {
 	Rest   string
 	Prefix string
-	Task   uint
 	Text   string
 }
 
 // Extract ...
 func (p *CommitMsg) Extract(line string) (bool, error) {
 	p.Rest = line
-	var err error
 	var pos int
-	var tmp string
-	var tmpUint uint64
 
-	// Take until '-' as Prefix(string)
-	pos = strings.IndexByte(p.Rest, '-')
-	if pos >= 0 {
-		p.Prefix = p.Rest[:pos]
-		p.Rest = p.Rest[pos+1:]
-	} else {
-		return false, nil
-	}
-
-	// Take until " | " as Task(uint)
+	// Take until " | " as Prefix(string)
 	pos = strings.Index(p.Rest, spaceBarSpace)
 	if pos >= 0 {
-		tmp = p.Rest[:pos]
+		p.Prefix = p.Rest[:pos]
 		p.Rest = p.Rest[pos+len(spaceBarSpace):]
 	} else {
 		return false, nil
 	}
-	if tmpUint, err = strconv.ParseUint(tmp, 10, 64); err != nil {
-		return false, fmt.Errorf("cannot parse `%s` into field Task(uint): %s", tmp, err)
-	}
-	p.Task = uint(tmpUint)
 
 	// Take the rest as Text(string)
 	p.Text = p.Rest

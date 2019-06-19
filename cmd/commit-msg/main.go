@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -60,12 +61,7 @@ func main() {
 	if branch == "master" {
 		message.Fatal("commiting to master is not allowed at gitlab.stageoffice.ru")
 	}
-	var bnv BranchNameValidator
-	if ok, _ := bnv.Extract(branch); !ok {
-		message.Fatalf("you can only commit in branches like <PREFIX>-<NUM> (<PREFIX> = UCS, CAT, CC, etc) , got %s instead", branch)
-	}
-
-	if !strings.HasPrefix(commitMsg, branch) {
+	if !strings.HasPrefix(commitMsg, branch+" | ") {
 		message.Fatalf("commit message must look like `%s | <TEXT>`, got `%s` instead", branch, commitMsg)
 	}
 
@@ -99,6 +95,39 @@ func main() {
 	default:
 		message.Warningf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
 		return
+	}
+
+	var cb BranchNameValidator
+	if ok, _ := cb.Extract(branch); !ok {
+		// OS hack
+		tty, err := os.OpenFile("/dev/tty", os.O_RDONLY, 0)
+		if err != nil {
+			message.Fatalf("branch name %s is not supported", branch)
+		}
+		defer func() {
+			if err := tty.Close(); err != nil {
+				message.Warningf("failed to close a terminal: %s", err)
+			}
+		}()
+		_, _ = fmt.Fprintf(os.Stderr, "\033[1;31mbranch name `%s` is not recommended, continue anyway? (y/N):\033[0m ", branch)
+
+		buf := bufio.NewScanner(tty)
+		var toExit bool
+		for buf.Scan() {
+			data := strings.TrimSpace(buf.Text())
+			if len(data) == 0 {
+				toExit = true
+				break
+			}
+			if strings.HasPrefix(data, "y") || strings.HasPrefix(data, "Y") {
+				break
+			}
+			toExit = true
+			break
+		}
+		if toExit {
+			os.Exit(1)
+		}
 	}
 
 	var cmChecker CommitMsg
@@ -135,7 +164,7 @@ func main() {
 
 func isInStringArray(value string, array []string) bool {
 	for _, item := range array {
-		if item == value {
+		if strings.HasPrefix(value, item+"-") {
 			return true
 		}
 	}

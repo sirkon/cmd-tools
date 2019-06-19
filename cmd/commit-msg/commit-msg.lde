@@ -1,2 +1,2 @@
-CommitMsg = Prefix(string) '-' Task(uint) " | " Text(string);
+CommitMsg = Prefix(string) " | " Text(string);
 BranchNameValidator = Prefix(string) '-' Task(uint);
