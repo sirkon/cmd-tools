@@ -88,6 +88,8 @@ func main() {
 		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-COMMON/schema"):
 		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
+	case strings.Contains(remoteURL, "UCS-CADDY-PLUGINS/"):
+		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-"):
 		acceptablePrefixes = append(acceptablePrefixes, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-"):
@@ -141,11 +143,11 @@ func main() {
 	if !isInStringArray(cmChecker.Prefix, acceptablePrefixes) {
 		switch len(acceptablePrefixes) {
 		case 0:
-			message.Fatal("internal error – no prefix found for remote path %s", remoteURL)
+			message.Fatalf("internal error – no prefix found for remote path %s", remoteURL)
 		case 1:
-			message.Fatal("commit message must be %s-<NUM> | <TEXT>, got `%s` instead", acceptablePrefixes[0], commitMsg)
+			message.Fatalf("commit message must be %s-<NUM> | <TEXT>, got `%s` instead", acceptablePrefixes[0], commitMsg)
 		case 2:
-			message.Fatal("commit message must be either %s-<NUM> or %s-<NUM> | <TEXT>, got `%s` instead",
+			message.Fatalf("commit message must be either %s-<NUM> or %s-<NUM> | <TEXT>, got `%s` instead",
 				acceptablePrefixes[0],
 				acceptablePrefixes[1],
 				commitMsg,
@@ -156,7 +158,7 @@ func main() {
 				values = append(values, fmt.Sprintf("%s-<NUM> | <TEXT>", prefix))
 			}
 			finalValue := fmt.Sprintf("%s or %s", strings.Join(values[:len(values)-1], ", "), values[len(values)-1])
-			message.Fatal("commit message must be one of %s, got `%s` instead", finalValue, commitMsg)
+			message.Fatalf("commit message must be one of %s, got `%s` instead", finalValue, commitMsg)
 		}
 
 	}
