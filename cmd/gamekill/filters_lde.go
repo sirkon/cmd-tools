@@ -15,6 +15,7 @@ import (
 
 var aces = "aces"
 var bslashesGjagentDotExe = "\\gjagent.exe"
+var gtaMinusVcDotExe = "gta-vc.exe"
 var launcher = "launcher"
 var warSpaceThunder = "War Thunder"
 var witcher3DotExe = "witcher3.exe"
@@ -135,6 +136,30 @@ func (p *TheWitcher) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, witcherDotExe)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(witcherDotExe):]
+	} else {
+		return false, nil
+	}
+	if len(p.Rest) != 0 {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// GTAViceCity ...
+type GTAViceCity struct {
+	Rest string
+}
+
+// Extract ...
+func (p *GTAViceCity) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "gta-vc.exe" and then pass it
+	pos = strings.Index(p.Rest, gtaMinusVcDotExe)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(gtaMinusVcDotExe):]
 	} else {
 		return false, nil
 	}

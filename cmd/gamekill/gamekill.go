@@ -18,6 +18,7 @@ var checkers = map[string]extractor{
 	"Gajin Tray Agent":     &GajinAgent{},
 	"The Witcher 3":        &Witcher3{},
 	"The Witcher":          &TheWitcher{},
+	"GTA Vice City":        &GTAViceCity{},
 }
 
 func main() {
