@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-var spaceBarSpace = " | "
+var constSpaceBarSpace = " | "
 
 // CommitMsg ...
 type CommitMsg struct {
@@ -30,10 +30,10 @@ func (p *CommitMsg) Extract(line string) (bool, error) {
 	var pos int
 
 	// Take until " | " as Prefix(string)
-	pos = strings.Index(p.Rest, spaceBarSpace)
+	pos = strings.Index(p.Rest, constSpaceBarSpace)
 	if pos >= 0 {
 		p.Prefix = p.Rest[:pos]
-		p.Rest = p.Rest[pos+len(spaceBarSpace):]
+		p.Rest = p.Rest[pos+len(constSpaceBarSpace):]
 	} else {
 		return false, nil
 	}
@@ -69,7 +69,7 @@ func (p *BranchNameValidator) Extract(line string) (bool, error) {
 
 	// Take the rest as Task(uint)
 	if tmpUint, err = strconv.ParseUint(p.Rest, 10, 64); err != nil {
-		return false, fmt.Errorf("cannot parse `%s` into field Task(uint): %s", p.Rest, err)
+		return false, fmt.Errorf("parsing `%s` into field Task(uint): %s", p.Rest, err)
 	}
 	p.Task = uint(tmpUint)
 	p.Rest = p.Rest[len(p.Rest):]

@@ -61,9 +61,6 @@ func main() {
 	if branch == "master" {
 		message.Fatal("commiting to master is not allowed at gitlab.stageoffice.ru")
 	}
-	if !strings.HasPrefix(commitMsg, branch+" | ") {
-		message.Fatalf("commit message must look like `%s | <TEXT>`, got `%s` instead", branch, commitMsg)
-	}
 
 	var acceptablePrefixes []string
 	const (
@@ -74,28 +71,22 @@ func main() {
 	switch {
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/ucs/bazaar"):
 		acceptablePrefixes = append(acceptablePrefixes, catalog)
-	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:ucs/bazaar"):
-		acceptablePrefixes = append(acceptablePrefixes, catalog)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CALENDAR/"):
 		acceptablePrefixes = append(acceptablePrefixes, calendar)
-	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-CALENDAR/"):
-		acceptablePrefixes = append(acceptablePrefixes, calendar)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-CATALOG/"):
-		acceptablePrefixes = append(acceptablePrefixes, catalog)
-	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-CATALOG/"):
-		acceptablePrefixes = append(acceptablePrefixes, catalog)
+		acceptablePrefixes = append(acceptablePrefixes, catalog, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-COMMON/schema"):
-		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
-	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-COMMON/schema"):
 		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
 	case strings.Contains(remoteURL, "UCS-CADDY-PLUGINS/"):
 		acceptablePrefixes = append(acceptablePrefixes, catalog, calendar, wholeproject)
 	case strings.Contains(remoteURL, "gitlab.stageoffice.ru/UCS-"):
 		acceptablePrefixes = append(acceptablePrefixes, wholeproject)
-	case strings.Contains(remoteURL, "gitlab.stageoffice.ru:UCS-"):
-		acceptablePrefixes = append(acceptablePrefixes, wholeproject)
 	default:
 		message.Warningf("%s: unsupported gitlab.stageoffice.ru/* kind of repository", remoteURL)
+		return
+	}
+
+	if strings.HasPrefix(commitMsg, branch+" | ") && isInStringArray(branch, acceptablePrefixes) {
 		return
 	}
 
