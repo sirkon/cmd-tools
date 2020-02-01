@@ -44,7 +44,7 @@ func main() {
 			continue
 		}
 		if data[1] != "*" {
-
+			continue
 		}
 		branch := stripansi.Strip(data[2])
 		if len(branch) == 0 {
