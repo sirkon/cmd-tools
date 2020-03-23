@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/shirou/gopsutil/process"
 	"github.com/sirkon/message"
-	"os"
 )
 
 type extractor interface {
@@ -19,6 +20,7 @@ var checkers = map[string]extractor{
 	"The Witcher 3":        &Witcher3{},
 	"The Witcher":          &TheWitcher{},
 	"GTA Vice City":        &GTAViceCity{},
+	"Shadow Of Mordor":     &ShadowOfMordor{},
 }
 
 func main() {
