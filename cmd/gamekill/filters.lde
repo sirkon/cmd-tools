@@ -4,4 +4,5 @@ GajinAgent = _ "\\gjagent.exe" $;
 Witcher3 = _"witcher3.exe" $;
 TheWitcher = _"witcher.exe" $;
 GTAViceCity = _ "gta-vc.exe" $;
-ShadowOfMordor = _ "/ShadowOfMordor/" ;
+ShadowOfMordor = _ "/ShadowOfMordor/";
+ShadowOfWar = _ "/ShadowOfWar/";

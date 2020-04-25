@@ -11,6 +11,7 @@ var constBslashesGjagentDotExe = "\\gjagent.exe"
 var constGtaMinusVcDotExe = "gta-vc.exe"
 var constLauncher = "launcher"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
+var constSlashShadowOfWarSlash = "/ShadowOfWar/"
 var constWarSpaceThunder = "War Thunder"
 var constWitcher3DotExe = "witcher3.exe"
 var constWitcherDotExe = "witcher.exe"
@@ -188,6 +189,27 @@ func (p *ShadowOfMordor) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, constSlashShadowOfMordorSlash)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constSlashShadowOfMordorSlash):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// ShadowOfWar ...
+type ShadowOfWar struct {
+	Rest string
+}
+
+// Extract ...
+func (p *ShadowOfWar) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "/ShadowOfWar/" and then pass it
+	pos = strings.Index(p.Rest, constSlashShadowOfWarSlash)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constSlashShadowOfWarSlash):]
 	} else {
 		return false, nil
 	}
