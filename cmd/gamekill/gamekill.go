@@ -14,14 +14,15 @@ type extractor interface {
 
 // checkers список фильтров на приложеньки, которые неплохо было бы убить
 var checkers = map[string]extractor{
-	"War Thunder":          &WarThunderAces{},
-	"War Thunder launcher": &WarThunderLauncher{},
-	"Gajin Tray Agent":     &GajinAgent{},
-	"The Witcher 3":        &Witcher3{},
-	"The Witcher":          &TheWitcher{},
-	"GTA Vice City":        &GTAViceCity{},
-	"Shadow Of Mordor":     &ShadowOfMordor{},
-	"Shadow Of War":        &ShadowOfWar{},
+	"War Thunder":                     &WarThunderAces{},
+	"War Thunder launcher":            &WarThunderLauncher{},
+	"Gajin Tray Agent":                &GajinAgent{},
+	"The Witcher 3":                   &Witcher3{},
+	"The Witcher":                     &TheWitcher{},
+	"GTA Vice City":                   &GTAViceCity{},
+	"Shadow Of Mordor":                &ShadowOfMordor{},
+	"Shadow Of War":                   &ShadowOfWar{},
+	"Dark Messiah Of Might And Magic": &DarkMessiah{},
 }
 
 func main() {

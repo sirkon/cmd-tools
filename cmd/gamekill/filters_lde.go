@@ -10,6 +10,7 @@ var constAces = "aces"
 var constBslashesGjagentDotExe = "\\gjagent.exe"
 var constGtaMinusVcDotExe = "gta-vc.exe"
 var constLauncher = "launcher"
+var constSlashDarkSpaceMessiah = "/Dark Messiah"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
 var constSlashShadowOfWarSlash = "/ShadowOfWar/"
 var constWarSpaceThunder = "War Thunder"
@@ -210,6 +211,27 @@ func (p *ShadowOfWar) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, constSlashShadowOfWarSlash)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constSlashShadowOfWarSlash):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// DarkMessiah ...
+type DarkMessiah struct {
+	Rest string
+}
+
+// Extract ...
+func (p *DarkMessiah) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "/Dark Messiah" and then pass it
+	pos = strings.Index(p.Rest, constSlashDarkSpaceMessiah)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constSlashDarkSpaceMessiah):]
 	} else {
 		return false, nil
 	}
