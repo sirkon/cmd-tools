@@ -23,6 +23,10 @@ var checkers = map[string]extractor{
 	"Shadow Of Mordor":                &ShadowOfMordor{},
 	"Shadow Of War":                   &ShadowOfWar{},
 	"Dark Messiah Of Might And Magic": &DarkMessiah{},
+	"Cyberpunk 2077":                  &Cyberpunk{},
+	"Play GTA IV":                     &GTAIVPlay{},
+	"GTA IV":                          &GTAIV{},
+	"Mafia":                           &Mafia{},
 }
 
 func main() {

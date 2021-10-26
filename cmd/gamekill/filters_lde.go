@@ -8,8 +8,12 @@ import (
 
 var constAces = "aces"
 var constBslashesGjagentDotExe = "\\gjagent.exe"
+var constCyberpunk = "Cyberpunk"
+var constGTAIVDotExe = "GTAIV.exe"
 var constGtaMinusVcDotExe = "gta-vc.exe"
 var constLauncher = "launcher"
+var constMafiaSpaceDefinitiveSpaceEdition = "Mafia Definitive Edition"
+var constPlayGTAIVDotExe = "PlayGTAIV.exe"
 var constSlashDarkSpaceMessiah = "/Dark Messiah"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
 var constSlashShadowOfWarSlash = "/ShadowOfWar/"
@@ -232,6 +236,90 @@ func (p *DarkMessiah) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, constSlashDarkSpaceMessiah)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constSlashDarkSpaceMessiah):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// Cyberpunk ...
+type Cyberpunk struct {
+	Rest string
+}
+
+// Extract ...
+func (p *Cyberpunk) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "Cyberpunk" and then pass it
+	pos = strings.Index(p.Rest, constCyberpunk)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constCyberpunk):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// GTAIVPlay ...
+type GTAIVPlay struct {
+	Rest string
+}
+
+// Extract ...
+func (p *GTAIVPlay) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "PlayGTAIV.exe" and then pass it
+	pos = strings.Index(p.Rest, constPlayGTAIVDotExe)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constPlayGTAIVDotExe):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// GTAIV ...
+type GTAIV struct {
+	Rest string
+}
+
+// Extract ...
+func (p *GTAIV) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "GTAIV.exe" and then pass it
+	pos = strings.Index(p.Rest, constGTAIVDotExe)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constGTAIVDotExe):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// Mafia ...
+type Mafia struct {
+	Rest string
+}
+
+// Extract ...
+func (p *Mafia) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "Mafia Definitive Edition" and then pass it
+	pos = strings.Index(p.Rest, constMafiaSpaceDefinitiveSpaceEdition)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constMafiaSpaceDefinitiveSpaceEdition):]
 	} else {
 		return false, nil
 	}

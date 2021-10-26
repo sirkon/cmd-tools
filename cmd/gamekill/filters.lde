@@ -7,3 +7,7 @@ GTAViceCity = _ "gta-vc.exe" $;
 ShadowOfMordor = _ "/ShadowOfMordor/";
 ShadowOfWar = _ "/ShadowOfWar/";
 DarkMessiah = _ "/Dark Messiah";
+Cyberpunk = _ "Cyberpunk";
+GTAIVPlay = _ "PlayGTAIV.exe";
+GTAIV = _ "GTAIV.exe";
+Mafia = _ "Mafia Definitive Edition";
