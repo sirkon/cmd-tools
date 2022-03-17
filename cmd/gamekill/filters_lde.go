@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-var constAces = "aces"
 var constBslashesGjagentDotExe = "\\gjagent.exe"
 var constCyberpunk = "Cyberpunk"
 var constGTAIVDotExe = "GTAIV.exe"
 var constGtaMinusVcDotExe = "gta-vc.exe"
+var constHalfMinusLifeSpace2 = "Half-Life 2"
 var constLauncher = "launcher"
 var constMafiaSpaceDefinitiveSpaceEdition = "Mafia Definitive Edition"
 var constPlayGTAIVDotExe = "PlayGTAIV.exe"
@@ -18,6 +18,7 @@ var constSlashDarkSpaceMessiah = "/Dark Messiah"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
 var constSlashShadowOfWarSlash = "/ShadowOfWar/"
 var constWarSpaceThunder = "War Thunder"
+var constWarThunderSlashLinux64SlashAces = "WarThunder/linux64/aces"
 var constWitcher3DotExe = "witcher3.exe"
 var constWitcherDotExe = "witcher.exe"
 
@@ -31,16 +32,11 @@ func (p *WarThunderAces) Extract(line string) (bool, error) {
 	p.Rest = line
 	var pos int
 
-	// Looking for "aces" and then pass it
-	pos = strings.Index(p.Rest, constAces)
+	// Looking for "WarThunder/linux64/aces" and then pass it
+	pos = strings.Index(p.Rest, constWarThunderSlashLinux64SlashAces)
 	if pos >= 0 {
-		p.Rest = p.Rest[pos+len(constAces):]
+		p.Rest = p.Rest[pos+len(constWarThunderSlashLinux64SlashAces):]
 	} else {
-		return false, nil
-	}
-
-	// Check if the rest is empty
-	if len(p.Rest) != 0 {
 		return false, nil
 	}
 
@@ -320,6 +316,27 @@ func (p *Mafia) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, constMafiaSpaceDefinitiveSpaceEdition)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constMafiaSpaceDefinitiveSpaceEdition):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// HalfLife2 ...
+type HalfLife2 struct {
+	Rest string
+}
+
+// Extract ...
+func (p *HalfLife2) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "Half-Life 2" and then pass it
+	pos = strings.Index(p.Rest, constHalfMinusLifeSpace2)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constHalfMinusLifeSpace2):]
 	} else {
 		return false, nil
 	}

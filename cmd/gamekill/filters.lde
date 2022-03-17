@@ -1,4 +1,4 @@
-WarThunderAces = _"aces" $;
+WarThunderAces = _"WarThunder/linux64/aces";
 WarThunderLauncher = _"War Thunder" _ "launcher";
 GajinAgent = _ "\\gjagent.exe" $;
 Witcher3 = _"witcher3.exe" $;
@@ -11,3 +11,4 @@ Cyberpunk = _ "Cyberpunk";
 GTAIVPlay = _ "PlayGTAIV.exe";
 GTAIV = _ "GTAIV.exe";
 Mafia = _ "Mafia Definitive Edition";
+HalfLife2 = _ "Half-Life 2";

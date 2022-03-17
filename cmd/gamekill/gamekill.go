@@ -27,6 +27,7 @@ var checkers = map[string]extractor{
 	"Play GTA IV":                     &GTAIVPlay{},
 	"GTA IV":                          &GTAIV{},
 	"Mafia":                           &Mafia{},
+	"Half Life 2":                     &HalfLife2{},
 }
 
 func main() {
