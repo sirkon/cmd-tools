@@ -17,7 +17,7 @@ var constPlayGTAIVDotExe = "PlayGTAIV.exe"
 var constSlashDarkSpaceMessiah = "/Dark Messiah"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
 var constSlashShadowOfWarSlash = "/ShadowOfWar/"
-var constSlashTheSpaceWitcherSpace2Slash = "/the Witcher 2/"
+var constSlashTheSpaceWitcherSpace2Slash = "/the witcher 2/"
 var constWarSpaceThunder = "War Thunder"
 var constWarThunderSlashLinux64SlashAces = "WarThunder/linux64/aces"
 var constWitcher3DotExe = "witcher3.exe"
@@ -135,7 +135,7 @@ func (p *TheWitcher2) Extract(line string) (bool, error) {
 	p.Rest = line
 	var pos int
 
-	// Looking for "/the Witcher 2/" and then pass it
+	// Looking for "/the witcher 2/" and then pass it
 	pos = strings.Index(p.Rest, constSlashTheSpaceWitcherSpace2Slash)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constSlashTheSpaceWitcherSpace2Slash):]
