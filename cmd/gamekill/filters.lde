@@ -1,8 +1,9 @@
 WarThunderAces = _"WarThunder/linux64/aces";
 WarThunderLauncher = _"War Thunder" _ "launcher";
 GajinAgent = _ "\\gjagent.exe" $;
-Witcher3 = _"witcher3.exe" $;
 TheWitcher = _"witcher.exe" $;
+TheWitcher2 = _ "/the Witcher 2/";
+TheWitcher3 = _"witcher3.exe" $;
 GTAViceCity = _ "gta-vc.exe" $;
 ShadowOfMordor = _ "/ShadowOfMordor/";
 ShadowOfWar = _ "/ShadowOfWar/";

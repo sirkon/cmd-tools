@@ -17,6 +17,7 @@ var constPlayGTAIVDotExe = "PlayGTAIV.exe"
 var constSlashDarkSpaceMessiah = "/Dark Messiah"
 var constSlashShadowOfMordorSlash = "/ShadowOfMordor/"
 var constSlashShadowOfWarSlash = "/ShadowOfWar/"
+var constSlashTheSpaceWitcherSpace2Slash = "/the Witcher 2/"
 var constWarSpaceThunder = "War Thunder"
 var constWarThunderSlashLinux64SlashAces = "WarThunder/linux64/aces"
 var constWitcher3DotExe = "witcher3.exe"
@@ -98,32 +99,6 @@ func (p *GajinAgent) Extract(line string) (bool, error) {
 	return true, nil
 }
 
-// Witcher3 ...
-type Witcher3 struct {
-	Rest string
-}
-
-// Extract ...
-func (p *Witcher3) Extract(line string) (bool, error) {
-	p.Rest = line
-	var pos int
-
-	// Looking for "witcher3.exe" and then pass it
-	pos = strings.Index(p.Rest, constWitcher3DotExe)
-	if pos >= 0 {
-		p.Rest = p.Rest[pos+len(constWitcher3DotExe):]
-	} else {
-		return false, nil
-	}
-
-	// Check if the rest is empty
-	if len(p.Rest) != 0 {
-		return false, nil
-	}
-
-	return true, nil
-}
-
 // TheWitcher ...
 type TheWitcher struct {
 	Rest string
@@ -138,6 +113,53 @@ func (p *TheWitcher) Extract(line string) (bool, error) {
 	pos = strings.Index(p.Rest, constWitcherDotExe)
 	if pos >= 0 {
 		p.Rest = p.Rest[pos+len(constWitcherDotExe):]
+	} else {
+		return false, nil
+	}
+
+	// Check if the rest is empty
+	if len(p.Rest) != 0 {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// TheWitcher2 ...
+type TheWitcher2 struct {
+	Rest string
+}
+
+// Extract ...
+func (p *TheWitcher2) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "/the Witcher 2/" and then pass it
+	pos = strings.Index(p.Rest, constSlashTheSpaceWitcherSpace2Slash)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constSlashTheSpaceWitcherSpace2Slash):]
+	} else {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+// TheWitcher3 ...
+type TheWitcher3 struct {
+	Rest string
+}
+
+// Extract ...
+func (p *TheWitcher3) Extract(line string) (bool, error) {
+	p.Rest = line
+	var pos int
+
+	// Looking for "witcher3.exe" and then pass it
+	pos = strings.Index(p.Rest, constWitcher3DotExe)
+	if pos >= 0 {
+		p.Rest = p.Rest[pos+len(constWitcher3DotExe):]
 	} else {
 		return false, nil
 	}
