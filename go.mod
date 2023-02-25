@@ -10,7 +10,7 @@ require (
 	github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4 // indirect
 	github.com/sirkon/message v1.5.1
 	github.com/stretchr/testify v1.2.2
-	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	gopkg.in/src-d/go-git.v4 v4.11.0
 )
 
