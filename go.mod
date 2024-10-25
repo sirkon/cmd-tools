@@ -8,6 +8,7 @@ require (
 	github.com/sanity-io/litter v1.1.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
 	github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4 // indirect
+	github.com/sirkon/errors v0.6.0
 	github.com/sirkon/message v1.5.1
 	github.com/stretchr/testify v1.2.2
 	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480 // indirect
