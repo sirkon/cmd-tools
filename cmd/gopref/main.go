@@ -16,7 +16,7 @@ import (
 
 var cliParams struct {
 	EntryID            string `arg:"" name:"entry-id" help:"Directory identifier" predictor:"pred"`
-	InstallCompletions bool   `short:"i" help:"Install completions and exit."`
+	InstallCompletions bool   `short:"i" help:"Setup completions and exit."`
 }
 
 func main() {
