@@ -1,4 +1,4 @@
-package gallery
+package main
 
 import (
 	"fmt"
@@ -14,9 +14,13 @@ import (
 	"github.com/sirkon/message"
 )
 
+const (
+	exportedDir = "EXPORTED"
+)
+
 func main() {
 	var cli struct {
-		Move bool   `help:"m" help:"Move files instead of copying." default:"false"`
+		Move bool   `short:"m" help:"Move files instead of copying." default:"false"`
 		Src  string `arg:"" help:"Path to a source directory with image files." default:"."`
 	}
 
@@ -39,14 +43,14 @@ func main() {
 		action = "move"
 	}
 
-	if err := moveToGallery(cli.Src, cli.Move); err != nil {
+	if err := copyToGallery(cli.Src, cli.Move); err != nil {
 		message.Fatal(
 			errors.Wrapf(err, "%s to gallery folder from source", action).Str("source-path", cli.Src),
 		)
 	}
 }
 
-func moveToGallery(src string, move bool) error {
+func copyToGallery(src string, move bool) error {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return errors.Wrap(err, "get home dir")
@@ -72,13 +76,17 @@ func moveToGallery(src string, move bool) error {
 	}
 
 	mkDirCache := make(map[string]struct{})
+	if err := os.MkdirAll(filepath.Join(src, exportedDir), 0755); err != nil {
+		return errors.Wrapf(err, "create %s directory", exportedDir)
+	}
+
 	for _, entry := range dir {
 		if entry.IsDir() {
 			continue
 		}
 
 		if err := processFile(entry, src, gallery, move, mkDirCache); err != nil {
-			return errors.Wrap(err, "process file").Str("entry", entry.Name())
+			message.Error(errors.Wrap(err, "process file").Str("file", entry.Name()))
 		}
 	}
 
@@ -122,7 +130,7 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 		}
 
 		dateTimeTagValue := tag.Value.(string)
-		datetime, err := time.Parse(time.DateTime, dateTimeTagValue)
+		datetime, err := time.Parse("2006:01:02 15:04:05", dateTimeTagValue)
 		if err != nil {
 			return errors.Wrap(err, "parse file datetime tag").Str("invalid-datetime", dateTimeTagValue)
 		}
@@ -150,8 +158,12 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 			}
 		} else {
 			_, err := os.Stat(destFile)
+			exportedDest := filepath.Join(src, exportedDir, entry.Name())
 			if err == nil {
 				message.Warningf("file %q already exists", destFile)
+				if err := os.Rename(sourceFile, exportedDest); err != nil {
+					message.Warning(errors.Wrap(err, "move file to exported dir"))
+				}
 				return nil
 			}
 			if !os.IsNotExist(err) {
@@ -160,6 +172,10 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 
 			if err := copyFile(sourceFile, destFile); err != nil {
 				return errors.Wrap(err, "copy file")
+			}
+
+			if err := os.Rename(sourceFile, exportedDest); err != nil {
+				message.Warning(errors.Wrap(err, "move file to exported dir"))
 			}
 		}
 
