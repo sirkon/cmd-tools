@@ -56,7 +56,7 @@ func copyToGallery(src string, move bool) error {
 		return errors.Wrap(err, "get home dir")
 	}
 
-	gallerySuffix := []string{"Gallery", "Галлерея"}
+	gallerySuffix := []string{"Gallery", "Галерея"}
 	var gallery string
 	for _, path := range gallerySuffix {
 		gal := filepath.Join(home, "Pictures", path)
@@ -147,7 +147,7 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 			cache[dir] = struct{}{}
 		}
 
-		destFile := filepath.Join(gallery, entry.Name())
+		destFile := filepath.Join(dir, entry.Name())
 		if move {
 			if err := os.Rename(sourceFile, destFile); err != nil {
 				if err := os.RemoveAll(destFile); err != nil {
@@ -187,6 +187,8 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 }
 
 func copyFile(sourceFile string, destFile string) (err error) {
+	message.Infof("copying %q -> %q", sourceFile, destFile)
+
 	srcFile, err := os.Open(sourceFile)
 	if err != nil {
 		return errors.Wrap(err, "open source file")
@@ -204,6 +206,8 @@ func copyFile(sourceFile string, destFile string) (err error) {
 	defer func() {
 		if err := dstFile.Close(); err != nil {
 			message.Warning(errors.Wrapf(err, "close destination file %q", destFile))
+		} else {
+			return
 		}
 
 		if err := os.Remove(destFile); err != nil {
