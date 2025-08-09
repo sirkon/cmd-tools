@@ -187,7 +187,7 @@ func processFile(entry os.DirEntry, src string, gallery string, move bool, cache
 }
 
 func copyFile(sourceFile string, destFile string) (err error) {
-	message.Infof("copying %q -> %q", sourceFile, destFile)
+	message.Debugf("copying %q -> %q", sourceFile, destFile)
 
 	srcFile, err := os.Open(sourceFile)
 	if err != nil {
