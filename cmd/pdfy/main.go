@@ -143,6 +143,8 @@ func pushFile(file io.Writer, path string) error {
 		cbType = "perl"
 	case ".rb":
 		cbType = "ruby"
+	case ".proto":
+		cbType = "proto"
 	}
 	buf.WriteString(cbType)
 	buf.WriteByte('\n')
