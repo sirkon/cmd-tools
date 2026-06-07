@@ -121,6 +121,7 @@ func pushFile(file io.Writer, path string) error {
 	buf.WriteString("# ")
 	buf.WriteString(filepath.Base(path))
 	buf.WriteByte('\n')
+	buf.WriteByte('\n')
 	buf.WriteString("```")
 
 	var cbType string
@@ -148,7 +149,7 @@ func pushFile(file io.Writer, path string) error {
 	}
 	buf.WriteString(cbType)
 	buf.WriteByte('\n')
-	if _, err := io.Copy(file, &buf); err != nil {
+	if _, err := buf.WriteTo(file); err != nil {
 		return errors.Wrap(err, "write header")
 	}
 
@@ -164,7 +165,7 @@ func pushFile(file io.Writer, path string) error {
 	if _, err := io.Copy(file, src); err != nil {
 		return errors.Wrap(err, "copy file data")
 	}
-	if _, err := io.WriteString(file, "```\n\n"); err != nil {
+	if _, err := io.WriteString(file, "\n```\n\n"); err != nil {
 		return errors.Wrap(err, "write footer")
 	}
 
