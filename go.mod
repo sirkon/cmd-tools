@@ -4,6 +4,7 @@ require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/alecthomas/kong v1.8.1
 	github.com/alexflint/go-arg v1.2.0
+	github.com/atotto/clipboard v0.1.4
 	github.com/dsoprea/go-exif/v3 v3.0.1
 	github.com/sanity-io/litter v1.1.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
@@ -16,7 +17,6 @@ require (
 require (
 	github.com/StackExchange/wmi v0.0.0-20181212234831-e0a55b97c705 // indirect
 	github.com/alexflint/go-scalar v1.0.0 // indirect
-	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dsoprea/go-logging v0.0.0-20200710184922-b02d349568dd // indirect
 	github.com/dsoprea/go-utility/v2 v2.0.0-20221003172846-a3e1774ef349 // indirect
@@ -36,7 +36,7 @@ require (
 	github.com/src-d/gcfg v1.4.0 // indirect
 	github.com/xanzy/ssh-agent v0.2.0 // indirect
 	golang.org/x/crypto v0.52.0 // indirect
-	golang.org/x/net v0.54.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/sys v0.45.0 // indirect
 	gopkg.in/src-d/go-billy.v4 v4.2.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
