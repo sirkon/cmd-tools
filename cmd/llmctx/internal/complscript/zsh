@@ -79,6 +79,7 @@ _llmctx_shells() {
 
 _llmctx_completion() {
     _arguments -S -C -s\
+        '(-s --save)'{-s,--save}"[Save completion script for llmctx within completion files.]" \
         "1:shell:_llmctx_shells"
 }
 

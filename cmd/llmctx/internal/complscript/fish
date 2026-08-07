@@ -25,6 +25,7 @@ complete -c llmctx -f -n '__fish_seen_subcommand_from stash' -x -s d -l descript
 
 # completion
 complete -c llmctx -f -n '__fish_use_subcommand' -a completion -d 'Generate completion code.'
+complete -c llmctx -f -n '__fish_seen_subcommand_from completion' -s s -l save -d "Save completion script for llmctx within completion files."
 complete -c llmctx -f -n '__fish_seen_subcommand_from completion' -a bash -d 'Completion script for Bash'
 complete -c llmctx -f -n '__fish_seen_subcommand_from completion' -a zsh -d 'Completion script for Zsh'
 complete -c llmctx -f -n '__fish_seen_subcommand_from completion' -a fish -d 'Completion script for Fish'
