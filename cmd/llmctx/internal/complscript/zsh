@@ -44,11 +44,28 @@ _llmctx_list() {
 
 }
 
+_llmctx_stash_file() {
+    # Suggest the required -n/--name and -d/--description flags until both have
+    # been given, then fall back to completing the context file path.
+    local n=no d=no w
+    for w in "${words[@]}"; do
+        case "$w" in
+            -n|--name|--name=*) n=yes ;;
+            -d|--description|--description=*) d=yes ;;
+        esac
+    done
+    if [[ $n == no || $d == no ]]; then
+        compadd -- '-n' '--name' '-d' '--description'
+        return
+    fi
+    _files
+}
+
 _llmctx_stash() {
     _arguments -S -C -s\
         '(-n --name=)'{-n,--name=}"[Name to stash context under.]:name to stash context under.:" \
         '(-d --description=)'{-d,--description=}"[Description of context.]:description of context.:" \
-        "1:file:"
+        ":file:_llmctx_stash_file"
 }
 
 _llmctx_shells() {
