@@ -13,3 +13,4 @@
 
 # JetBrains files
 .idea
+.aider*

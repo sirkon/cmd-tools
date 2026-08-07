@@ -76,6 +76,8 @@ func job(out outFileName, paths []string) (err error) {
 	}
 
 	cmd := exec.Command("panpdf", ir)
+	cmd.Stderr = os.Stderr
+	cmd.Stdout = os.Stdout
 	if err := cmd.Run(); err != nil {
 		return errors.Wrap(err, "convert intermediate .md file into pdf")
 	}
