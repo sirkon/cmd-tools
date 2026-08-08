@@ -10,8 +10,6 @@ import (
 	"github.com/miekg/king"
 	"github.com/sirkon/errors"
 	"github.com/sirkon/message"
-
-	"github.com/sirkon/cmd-tools/cmd/llmctx/internal/complscript"
 )
 
 // CommandCompletion команда генерации скриптов автодополнения.
@@ -85,13 +83,18 @@ func (c *CommandCompletion) completionZsh() error {
 // автодополнения позиционных аргументов для Fish, поэтому используется
 // вшитый скелет из complscript.
 func (c *CommandCompletion) completionFish() error {
+	complete, err := c.generate(&king.Fish{}, contextNamesHelper)
+	if err != nil {
+		return errors.Wrap(err, "generate Bash completion script")
+	}
+
 	cfgDir, err := os.UserConfigDir()
 	if err != nil {
 		return errors.Wrap(err, "get current user config directory")
 	}
 	absComplFileName := filepath.Join(cfgDir, "fish", "completions", appName+".fish")
 
-	return c.output(complscript.Fish, absComplFileName)
+	return c.output(complete, absComplFileName)
 }
 
 // generate рендерит скрипт автодополнения через king. Скрипт разрешает имена
