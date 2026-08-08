@@ -11,7 +11,7 @@ import (
 
 // CommandInfo показать данные текущего контекста.
 type CommandInfo struct {
-	Name string `arg:"" required:"" help:"Context name to put into the current git project."`
+	Name string `arg:"" required:"" completion:"_llmctx_context_names" help:"Context name to put into the current git project."`
 }
 
 func (c *CommandInfo) Run(ctx *runContext) error {

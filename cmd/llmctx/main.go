@@ -42,6 +42,8 @@ func main() {
 	logFilePath := filepath.Join(appCacheDir, "llmctx.bin")
 
 	context := &runContext{
+		cli: &cli,
+
 		fileEdit: func(name string) error {
 			ep := editor()
 			opts := append(ep.Flags, name)

@@ -9,7 +9,7 @@ import (
 
 // CommandDelete удалить существующий контекст из локальной базы.
 type CommandDelete struct {
-	Name string `arg:"" required:"" help:"Context name to delete."`
+	Name string `arg:"" required:"" completion:"_llmctx_context_names" help:"Context name to delete."`
 }
 
 // Run запуск команды.

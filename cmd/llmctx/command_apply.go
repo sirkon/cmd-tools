@@ -10,7 +10,7 @@ import (
 
 // CommandApply сохранить существующий контекст в папке контекстов текущего репозитория git.
 type CommandApply struct {
-	Name string `arg:"" required:"" help:"Context name to put into the current git project."`
+	Name string `arg:"" required:"" completion:"_llmctx_context_names" help:"Context name to put into the current git project."`
 	File string `arg:"" required:"" help:"File name to store context into."`
 }
 

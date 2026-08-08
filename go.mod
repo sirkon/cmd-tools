@@ -2,10 +2,11 @@ module github.com/sirkon/cmd-tools
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
-	github.com/alecthomas/kong v1.8.1
+	github.com/alecthomas/kong v1.12.1
 	github.com/alexflint/go-arg v1.2.0
 	github.com/atotto/clipboard v0.1.4
 	github.com/dsoprea/go-exif/v3 v3.0.1
+	github.com/miekg/king v1.0.12
 	github.com/sanity-io/litter v1.1.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
 	github.com/sirkon/errors v1.1.0
@@ -17,6 +18,7 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/StackExchange/wmi v0.0.0-20181212234831-e0a55b97c705 // indirect
 	github.com/alexflint/go-scalar v1.0.0 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
@@ -29,10 +31,12 @@ require (
 	github.com/go-errors/errors v1.4.2 // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/golang/geo v0.0.0-20210211234256-740aa86cb551 // indirect
+	github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20180830205328-81db2a75821e // indirect
 	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/mitchellh/go-homedir v1.0.0 // indirect
+	github.com/mmarkdown/mmark/v2 v2.2.47 // indirect
 	github.com/pelletier/go-buffruneio v0.2.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

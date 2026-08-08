@@ -19,6 +19,8 @@ type CLI struct {
 }
 
 type runContext struct {
+	cli *CLI
+
 	fileEdit    func(name string) error
 	interpreter func() (*MetadataViewer, error)
 	inserter    func(data ContextData) error

@@ -8,7 +8,7 @@ import (
 
 // CommandEdit команда для редактирования текста существующего контекста.
 type CommandEdit struct {
-	Name string `arg:"" required:"" help:"Context name to edit."`
+	Name string `arg:"" required:"" completion:"_llmctx_context_names" help:"Context name to edit."`
 }
 
 func (c *CommandEdit) Run(ctx *runContext) error {
