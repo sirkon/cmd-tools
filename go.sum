@@ -91,6 +91,10 @@ github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 h1:Bvq8AziQ5j
 github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042/go.mod h1:TPpsiPUEh0zFL1Snz4crhMlBe60PYxRHr5oFF3rRYg0=
 github.com/miekg/king v1.0.12 h1:qSsXVgNiJJomoIjPRhjHi4pOVs8xUqmf0Oxc7tIAD4w=
 github.com/miekg/king v1.0.12/go.mod h1:JS54WkVYv4IqeHVlgbcGSLwOK0QyLNtRcbRuqXDj8Gk=
+github.com/miekg/king v1.0.16 h1:oypfQLLNIu9YL8r9BJCsJ4jfgbNn6GDv21ri0/bavxw=
+github.com/miekg/king v1.0.16/go.mod h1:JS54WkVYv4IqeHVlgbcGSLwOK0QyLNtRcbRuqXDj8Gk=
+github.com/miekg/king v1.0.17 h1:udGS9k13u4jJRXwv+k+Tdsl6HA4hSDBTwmUplRW6iEA=
+github.com/miekg/king v1.0.17/go.mod h1:JS54WkVYv4IqeHVlgbcGSLwOK0QyLNtRcbRuqXDj8Gk=
 github.com/mitchellh/go-homedir v1.0.0 h1:vKb8ShqSby24Yrqr/yDYkuFz8d0WUjys40rvnGC8aR0=
 github.com/mitchellh/go-homedir v1.0.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/mmarkdown/mmark/v2 v2.2.47 h1:2z5ZBhaWV7SN3qqUYZ0psgRFdsZIi2ah4apFYJXxMA0=

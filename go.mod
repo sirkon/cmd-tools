@@ -6,7 +6,7 @@ require (
 	github.com/alexflint/go-arg v1.2.0
 	github.com/atotto/clipboard v0.1.4
 	github.com/dsoprea/go-exif/v3 v3.0.1
-	github.com/miekg/king v1.0.12
+	github.com/miekg/king v1.0.17
 	github.com/sanity-io/litter v1.1.0
 	github.com/shirou/gopsutil v2.18.12+incompatible
 	github.com/sirkon/errors v1.1.0

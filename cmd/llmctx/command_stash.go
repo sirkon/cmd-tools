@@ -14,7 +14,7 @@ import (
 type CommandStash struct {
 	Name        ValidName        `short:"n" required:"" help:"Name to stash context under."`
 	Description ValidDescription `short:"d" required:"" help:"Description of context."`
-	File        string           `arg:""    required:"" help:"Context file."`
+	File        string           `arg:""    required:"" help:"Context file." completion:"<file>"`
 }
 
 func (c *CommandStash) Run(ctx *runContext) error {
